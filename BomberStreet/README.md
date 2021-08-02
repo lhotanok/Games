@@ -1,4 +1,4 @@
-# Bomber Street <img src=".\BomberStreet\bomba_icona.ico"/>
+# Bomber Street <img src=".\BomberStreet\icon.png" width="50">
 
 `WinForms`
 
