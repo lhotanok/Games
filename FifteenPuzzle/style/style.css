@@ -1,0 +1,38 @@
+body {
+    background-color: #eeeeee;
+
+    font: 14pt Calibri, sans-serif;
+    color: #393E46;
+    text-align: center;
+}
+
+p span {
+    display: block;
+}
+
+#game-board {
+    background-color: #eeeeee;
+
+    margin: auto;
+    
+    width: calc(80vmin);
+    height: calc(80vmin);
+    
+    position: relative;
+}
+
+#game-board div.tile {
+    border-radius: 0.5vmin;
+    background-color: #aad8d3;
+
+    font-size: 12vmin;
+    line-height: 20vmin;
+
+    width: calc(20vmin - 2px);
+    height: calc(20vmin - 2px);
+
+    position: absolute;
+    transition: all 1s ease;
+
+    cursor: pointer;
+}
