@@ -1,0 +1,53 @@
+16
+30
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Xs  hpppppppppDDD   X        X
+Xhhhh kk        X   hv   pp  X
+X     DDD  qQqqqX   h        X
+XXXXXXXXXXXXXXXXX   pXXXXXXXXX
+X        p  X       p  <     X
+X           X   t   pDDDDDp  X
+X  tv       X   t            X
+X  tt   XXXXX         ppDpp  X
+X  pp DDDDDD p               X
+X  p          p XXX          X
+X               D    DDDDDhhhX
+X      hhhhhhhhhD            X
+X tt       D           v     X
+X          D        XpQQ     X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+31
+66
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X             D             qQQ         X              X         X
+X  v      s   DD              D         Xqqqqqqq       X         X
+X              D      ttt     X         X              X         X
+XQQQQQQQQqqqqqXD DDDhhhhh     h         X              X         X
+X             X               X         X       DDDDDDDX         X
+X             Xp              X                 X                X
+X             XXpp          ^ X         X       X           p    X
+X                ppp          XttttpppppX       X           pp   X
+X             X               q         X       q           pXXXXX
+X     >       XXXXXXXXXXXXttttX         X     qqq           p    X
+X                             X         X       q                X
+XXXppp    ttt X               X         X       X                X
+X             X               QQ        X       X   v    ppp     X
+X             X   Q            QQ       X       X  pp            X
+X             X    Q             tp     XXXXhhXXX                X
+X                   q         pppp pp           XXXX    t        X
+X             X         XXXXXXtt                X     ttt        X
+X             X              > t                X    ttt         X
+X             X                    ttt          X                X
+X             X     ttttttt       tthhhhDDh     X                X
+X             X     t    tt              tth    X                X
+XXXX    XXXXXXX     tt   tt                hh   X                X
+X             XX                               X                 X
+X              XX  DDDDhhXXXttpp   QQQQQq     X         ttt      X
+X                        XXX           q     X         ttttt     X
+X       hhhh              X             q   X         ttttttt    X
+X       <                 X             hDDD                     X
+X                         X             hDD                      X
+X                                       DD                       X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
