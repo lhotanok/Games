@@ -261,6 +261,22 @@ private:
     }
 };
 
+void process_fields_to_win_arg(int arg, game& g, int row_count, int column_count) {
+    auto fields_to_win = arg;
+
+    if (fields_to_win <= 0)
+    {
+        cout << "Invalid optional argument. Number of fields needed to win the game must be positive number.";
+        throw;
+    }
+    if (fields_to_win > row_count && fields_to_win > column_count)
+    {
+        cout << "Invalid optional argument. Number of fields needed to win the game must be within the board dimensions.";
+        throw;
+    }
+    g.set_fields_to_win(fields_to_win);
+}
+
 int main(int argc, char** argv)
 {
     vector<string> args(argv, argv + argc);
@@ -282,16 +298,7 @@ int main(int argc, char** argv)
 
     game g(row_count, column_count);
 
-    if (args.size() > 3)
-    {
-        auto fields_to_win = stoi(args[3]);
-        if (fields_to_win <= 0)
-        {
-            cout << "Invalid optional argument. Number of fields needed to win the game must be positive number.";
-            throw;
-        }
-        g.set_fields_to_win(fields_to_win);
-    }
+    if (args.size() > 3) process_fields_to_win_arg(stoi(args[3]), g, row_count, column_count);
     
     g.play_game();
 }
