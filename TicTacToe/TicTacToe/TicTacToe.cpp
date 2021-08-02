@@ -149,10 +149,36 @@ public:
 };
 
 class game {
+public:
+    game(int n_rows, int n_columns) : b(board(n_rows, n_columns)), fields_to_win(5) { }
+
+    void set_fields_to_win(int win_fields) {
+        fields_to_win = win_fields;
+    }
+
+    void play_game() {
+        b.print();
+
+        Field current_field = Field::X; //player 1 starts with X
+        bool game_over = false;
+
+        while (!game_over)
+        {
+            int x, y;
+            get_valid_positions(x, y);
+            b.set(x, y, current_field);
+            game_over = is_game_over(x, y, current_field);
+            current_field = set_next_round_field(current_field);
+            b.print();
+        }
+
+        cout << "GAME OVER";
+    }
 private:
     using Field = board::Field;
 
     board b;
+    int fields_to_win;
 
     void get_valid_positions(int& x, int& y) const {
         cin >> x >> y;
@@ -206,54 +232,32 @@ private:
     }
 
     bool curr_player_won(int field_counter) const {
-        constexpr int fields_to_win = 5;
         return field_counter >= fields_to_win;
     }
 
     bool is_game_over(int curr_x, int curr_y, const Field& curr_field) const {
         board::row_t curr_row = b.get_row(curr_x);
-        int field_counter = count_same_fields(curr_y, curr_row, curr_field); //check row
+        int field_counter = count_same_fields(curr_y, curr_row, curr_field); // check row
 
         if (!curr_player_won(field_counter))
         {
             board::column_t curr_column = b.get_column(curr_y);
-            field_counter = count_same_fields(curr_x, curr_column, curr_field); //check column
+            field_counter = count_same_fields(curr_x, curr_column, curr_field); // check column
         }
         if (!curr_player_won(field_counter))
         {
-            int curr_field_index = 0; //to remark position of current field in vector of diagonal positions
+            int curr_field_index = 0; // to remark position of current field in vector of diagonal positions
             board::diagonal_t t_b_diagonal = b.get_top_to_bottom_diagonal(curr_x, curr_y, curr_field_index);
             field_counter = count_same_fields(curr_field_index, t_b_diagonal, curr_field); //check t_b_diagonal
         }
         if (!curr_player_won(field_counter))
         {
-            int curr_field_index = 0; //to remark position of current field in vector of diagonal positions
+            int curr_field_index = 0; // to remark position of current field in vector of diagonal positions
             board::diagonal_t b_t_diagonal = b.get_bottom_to_top_diagonal(curr_x, curr_y, curr_field_index);
-            field_counter = count_same_fields(curr_field_index, b_t_diagonal, curr_field); //check b_t_diagonal
+            field_counter = count_same_fields(curr_field_index, b_t_diagonal, curr_field); // check b_t_diagonal
         }
 
         return curr_player_won(field_counter);
-    }
-public:
-    game(int n_rows, int n_columns) : b(board(n_rows, n_columns)) { }
-
-    void play_game() {
-        b.print();
-
-        Field current_field = Field::X; //player 1 starts with X
-        bool game_over = false;
-
-        while (!game_over)
-        {
-            int x, y;
-            get_valid_positions(x, y);
-            b.set(x, y, current_field);
-            game_over = is_game_over(x, y, current_field);
-            current_field = set_next_round_field(current_field);
-            b.print();
-        }
-
-        cout << "GAME OVER";
     }
 };
 
@@ -261,11 +265,33 @@ int main(int argc, char** argv)
 {
     vector<string> args(argv, argv + argc);
 
-    if (args.size() != 3)
+    if (args.size() < 3)
     {
-        throw new runtime_error("Invalid number of arguments.");
+        cout << "Invalid number of arguments. 2 arguments required for board size.";
+        throw;
     }
 
-    game g(stoi(args[1]), stoi(args[2])); // board size given as arguments from command line
+    auto row_count = stoi(args[1]);
+    auto column_count = stoi(args[2]);
+
+    if (row_count <= 0 || column_count <= 0)
+    {
+        cout << "Invalid arguments. 2 arguments representing positive numbers are required.";
+        throw;
+    }
+
+    game g(row_count, column_count);
+
+    if (args.size() > 3)
+    {
+        auto fields_to_win = stoi(args[3]);
+        if (fields_to_win <= 0)
+        {
+            cout << "Invalid optional argument. Number of fields needed to win the game must be positive number.";
+            throw;
+        }
+        g.set_fields_to_win(fields_to_win);
+    }
+    
     g.play_game();
 }
