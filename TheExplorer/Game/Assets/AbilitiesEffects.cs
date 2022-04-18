@@ -1,12 +1,21 @@
 using Gamekit2D;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AbilitiesEffects : MonoBehaviour
 {
+    private static readonly float[] randomRatioValues = { 2f / 3f, 3f / 2f, 3f / 4f, 4f / 3f };
+    private static readonly bool[] ratioEffect = { true, false, true };
+
+
     private float duration = 30;
+
     private float minSpeed = 2;
+    private float maxSpeed = 20;
+
+    private float minGravity = 1;
     private float maxGravity = 200;
 
     /// <summary>
@@ -37,7 +46,42 @@ public class AbilitiesEffects : MonoBehaviour
     {
         if (AbilitiesCanBeModified())
         {
-            PlayerCharacter.PlayerInstance.StartCoroutine(ApplyRangedAttackEffect());
+            PlayerCharacter.PlayerInstance.StartCoroutine(DisableRangedAttackEffect());
+        }
+    }
+
+    public void UseRandomEffect()
+    {
+        bool useRatio = ratioEffect[UnityEngine.Random.Range(0, ratioEffect.Length)];
+
+        if (useRatio)
+        {
+            Func<float, IEnumerator>[] ratioEffects = { ApplySpeedEffect, ApplyGravityEffect };
+
+            var randomEffect = ratioEffects[UnityEngine.Random.Range(0, ratioEffects.Length)];
+
+            var randomRatioIndex = UnityEngine.Random.Range(0, randomRatioValues.Length);
+            var randomRatio = randomRatioValues[randomRatioIndex];
+
+            print($"randomRatioIndex: {randomRatioIndex}, random ratio: {randomRatio}");
+            foreach (var ratio in randomRatioValues)
+            {
+                print(ratio);
+            }
+
+            PlayerCharacter.PlayerInstance.StartCoroutine(randomEffect(randomRatio));
+        }
+        else
+        {
+            Func<IEnumerator>[] nonRatioEffects = {
+                DisableRangedAttackEffect,
+                EnableRangedAttackEffect,
+                DisableMeleeAttackEffect,
+                EnableMeleeAttackEffect,
+            };
+
+            var randomEffect = nonRatioEffects[UnityEngine.Random.Range(0, nonRatioEffects.Length)];
+            PlayerCharacter.PlayerInstance.StartCoroutine(randomEffect());
         }
     }
 
@@ -56,7 +100,7 @@ public class AbilitiesEffects : MonoBehaviour
     {
         float modifiedSpeed = PlayerCharacter.PlayerInstance.maxSpeed * ratio;
 
-        if (modifiedSpeed >= minSpeed)
+        if (modifiedSpeed >= minSpeed && modifiedSpeed <= maxSpeed)
         {
             // apply effect
             PlayerCharacter.PlayerInstance.maxSpeed = modifiedSpeed;
@@ -76,7 +120,7 @@ public class AbilitiesEffects : MonoBehaviour
 
         print($"Modified gravity: {modifiedGravity}, max gravity: {maxGravity}");
 
-        if (modifiedGravity <= maxGravity)
+        if (modifiedGravity >= minGravity && modifiedGravity <= maxGravity)
         {
             // apply effect
             PlayerCharacter.PlayerInstance.gravity = modifiedGravity;
@@ -90,19 +134,78 @@ public class AbilitiesEffects : MonoBehaviour
         }
     }
 
-    private IEnumerator ApplyRangedAttackEffect()
+    private void SafeEnableRangedAttack()
     {
-        var originalBulletPool = new List<BulletObject>() { };
-        originalBulletPool.AddRange(PlayerCharacter.PlayerInstance.bulletPool.pool);
+        if (!PlayerInput.Instance.RangedAttack.Enabled)
+        {
+            PlayerInput.Instance.RangedAttack.Enable();
+            print("Ranged attack enabled");
+        }
+    }
 
+    private void SafeDisableRangedAttack()
+    {
+        if (PlayerInput.Instance.RangedAttack.Enabled)
+        {
+            PlayerInput.Instance.RangedAttack.Disable();
+            print("Ranged attack disabled");
+        }
+    }
+
+    private void SafeEnableMeleeAttack()
+    {
+        if (!PlayerCharacter.PlayerInstance.meleeDamager.enabled)
+        {
+            PlayerCharacter.PlayerInstance.EnableMeleeAttack();
+            print("Melee attack enabled");
+        }
+    }
+
+    private void SafeDisableMeleeAttack()
+    {
+        if (PlayerCharacter.PlayerInstance.meleeDamager.enabled)
+        {
+            PlayerCharacter.PlayerInstance.DisableMeleeAttack();
+            print("Melee attack disabled");
+        }
+    }
+
+    private IEnumerator DisableRangedAttackEffect()
+    {
         // apply effect
-        PlayerInput.Instance.RangedAttack.Disable();
-        print("Ranged attack disabled");
+        SafeDisableRangedAttack();
 
         yield return new WaitForSeconds(duration);
 
         // remove effect
-        PlayerInput.Instance.RangedAttack.Enable();
+        SafeEnableRangedAttack();
         print("Ranged attack enabled");
+    }
+
+    private IEnumerator EnableRangedAttackEffect()
+    {
+        // apply effect
+        SafeEnableRangedAttack();
+
+        yield return new WaitForSeconds(duration);
+    }
+
+    private IEnumerator EnableMeleeAttackEffect()
+    {
+        // apply effect
+        SafeEnableMeleeAttack();
+
+        yield return new WaitForSeconds(duration);
+    }
+
+    private IEnumerator DisableMeleeAttackEffect()
+    {
+        // apply effect
+        SafeDisableMeleeAttack();
+
+        yield return new WaitForSeconds(duration);
+
+        // remove effect
+        SafeEnableMeleeAttack();
     }
 }
