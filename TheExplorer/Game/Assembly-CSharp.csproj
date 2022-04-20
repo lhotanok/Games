@@ -99,6 +99,7 @@
     <Compile Include="Assets\2DGamekit\Scripts\Character\MonoBehaviours\Bullet.cs" />
     <Compile Include="Assets\2DGamekit\Scripts\AI\GunnerBeamController.cs" />
     <Compile Include="Assets\2DGamekit\Scripts\Core\InteractOnCollision.cs" />
+    <Compile Include="Assets\AbilitiesEffects.cs" />
     <Compile Include="Assets\2DGamekit\Scripts\Effect\SpriteColorChange.cs" />
     <Compile Include="Assets\2DGamekit\Scripts\Localization\TranslatedPhrases.cs" />
     <Compile Include="Assets\2DGamekit\Scripts\Character\StateMachineBehaviours\Player\MeleeAttackSMB.cs" />
@@ -194,7 +195,9 @@
     <Compile Include="Assets\2DGamekit\Scripts\Character\StateMachineBehaviours\Enemies\ChomperAttackSMB.cs" />
     <Compile Include="Assets\2DGamekit\Scripts\SceneManagement\IDataPersister.cs" />
     <Compile Include="Assets\2DGamekit\Scripts\Objects\Pushables\PressurePad.cs" />
-    <Compile Include="Assets\AbilitiesEffects.cs" />
+    <Compile Include="Assets\TimerController.cs" />
+    <Compile Include="Assets\ScoreController.cs" />
+    <Compile Include="Assets\ScoreCanvasController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\2DGamekit\Utilities\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
