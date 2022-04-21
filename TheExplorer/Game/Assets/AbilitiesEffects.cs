@@ -2,10 +2,13 @@ using Gamekit2D;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class AbilitiesEffects : MonoBehaviour
 {
+    public static string AbilityUpdates = "Default abilities";
+
     private static readonly float[] randomRatioValues = {
         2f / 3f,
         3f / 2f, 
@@ -81,6 +84,8 @@ public class AbilitiesEffects : MonoBehaviour
         player.maxSpeed = originalSpeed;
         player.gravity = originalGravity;
         player.transform.localScale = Vector3.one;
+
+        AbilityUpdates = "Default abilities";
     }
 
     public void UseRandomEffect()
@@ -145,7 +150,8 @@ public class AbilitiesEffects : MonoBehaviour
         {
             // apply effect
             PlayerCharacter.PlayerInstance.maxSpeed = modifiedSpeed;
-            print($"Changing max speed to: {PlayerCharacter.PlayerInstance.maxSpeed}");
+            print($"Changing max speed to: {modifiedSpeed}");
+            AbilityUpdates = $"Max speed: {modifiedSpeed:0.00}";
 
             string effectId = Guid.NewGuid().ToString();
             effectIds.Add(effectId);
@@ -157,7 +163,8 @@ public class AbilitiesEffects : MonoBehaviour
             if (SpeedWithinRange(revertedSpeed) && effectIds.Contains(effectId))
             {
                 PlayerCharacter.PlayerInstance.maxSpeed = revertedSpeed;
-                print($"Reverting max speed to: {PlayerCharacter.PlayerInstance.maxSpeed}");
+                print($"Reverting max speed to: {revertedSpeed}");
+                AbilityUpdates = $"Max speed: {revertedSpeed:0.00}";
             }
         }
     }
@@ -174,7 +181,8 @@ public class AbilitiesEffects : MonoBehaviour
         {
             // apply effect
             PlayerCharacter.PlayerInstance.gravity = modifiedGravity;
-            print($"Changing gravity to: {PlayerCharacter.PlayerInstance.gravity}");
+            print($"Changing gravity to: {modifiedGravity}");
+            AbilityUpdates = $"Gravity: {modifiedGravity:0.00}";
 
             string effectId = Guid.NewGuid().ToString();
             effectIds.Add(effectId);
@@ -186,7 +194,8 @@ public class AbilitiesEffects : MonoBehaviour
             if (GravityWithinRange(revertedGravity) && effectIds.Contains(effectId))
             {
                 PlayerCharacter.PlayerInstance.gravity = revertedGravity;
-                print($"Reverting gravity to: {PlayerCharacter.PlayerInstance.gravity}");
+                print($"Reverting gravity to: {revertedGravity}");
+                AbilityUpdates = $"Gravity: {revertedGravity:0.00}";
             }
         }
     }
@@ -202,6 +211,7 @@ public class AbilitiesEffects : MonoBehaviour
             // apply effect
             PlayerCharacter.PlayerInstance.transform.localScale = modifiedSize;
             print($"Changing height to: {modifiedSize.y}");
+            AbilityUpdates = $"Height: {modifiedSize.y:0.00}";
 
             string effectId = Guid.NewGuid().ToString();
             effectIds.Add(effectId);
@@ -212,7 +222,8 @@ public class AbilitiesEffects : MonoBehaviour
             if (effectIds.Contains(effectId))
             {
                 PlayerCharacter.PlayerInstance.transform.localScale = Vector3.one;
-                print($"Reverting height to: {Vector3.one.y}");
+                print($"Reverting height to: 1");
+                AbilityUpdates = $"Height: 1";
             }
         }
     }
@@ -225,6 +236,7 @@ public class AbilitiesEffects : MonoBehaviour
         {
             PlayerInput.Instance.RangedAttack.Enable();
             print("Ranged attack enabled");
+            AbilityUpdates = $"Ranged attack enabled";
         }
     }
 
@@ -234,6 +246,7 @@ public class AbilitiesEffects : MonoBehaviour
         {
             PlayerInput.Instance.RangedAttack.Disable();
             print("Ranged attack disabled");
+            AbilityUpdates = $"Ranged attack disabled";
         }
     }
 
@@ -243,6 +256,7 @@ public class AbilitiesEffects : MonoBehaviour
         {
             PlayerCharacter.PlayerInstance.EnableMeleeAttack();
             print("Melee attack enabled");
+            AbilityUpdates = $"Melee attack enabled";
         }
     }
 
@@ -252,6 +266,7 @@ public class AbilitiesEffects : MonoBehaviour
         {
             PlayerCharacter.PlayerInstance.DisableMeleeAttack();
             print("Melee attack disabled");
+            AbilityUpdates = $"Melee attack disabled";
         }
     }
 
