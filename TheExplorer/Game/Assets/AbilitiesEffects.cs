@@ -33,7 +33,7 @@ public class AbilitiesEffects : MonoBehaviour
     private float originalGravity = 80;
 
     private float minHeight = 0.3f;
-    private float maxHeight = 2;
+    private float maxHeight = 1.1f;
 
     private static List<string> effectIds = new List<string>();
 
